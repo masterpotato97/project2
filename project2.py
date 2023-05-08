@@ -13,6 +13,35 @@ def paco_tacos(shopping_cart):
         if customer_input == 'done':
             break
 
+        if customer_input == 'remove':
+            print('Here is your current cart:')
+            for item, quantity in your_cart.items():
+                print(f'{item}: {quantity} x ${ingredients[item]:.2f} = ${ingredients[item] * quantity:.2f}')
+
+            item_to_remove = input('What item would you like to remove? ')
+            if item_to_remove not in your_cart:
+                print('That item is not in your cart.')
+                continue
+
+            try:
+                remove_quantity = int(input(f'How many {item_to_remove} would you like to remove? '))
+            except ValueError:
+                print('Invalid input. Please enter a number.')
+                continue
+
+            if remove_quantity < 1:
+                print('Quantity must be greater than zero.')
+                continue
+
+            if remove_quantity >= your_cart[item_to_remove]:
+                del your_cart[item_to_remove]
+                print(f'{item_to_remove} has been removed from your cart.')
+            else:
+                your_cart[item_to_remove] -= remove_quantity
+                print(f'{remove_quantity} {item_to_remove}(s) have been removed from your cart.')
+
+            continue
+
         if customer_input not in ingredients:
             print('Sorry, we do not have that item.')
             continue
